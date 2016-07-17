@@ -1,0 +1,63 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tdb query out', {
+        category: 'PSWoT',
+        color: '#F5D0A9',
+        defaults: {
+            name: {value: ""},
+            configdiscovery: {value: "", type: "configdiscovery", required: true}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "db.png",
+        label: function () {
+            return this.name || "tdb query";
+        },
+        oneditprepare: function () {
+            $(document).tooltip({
+                position: {
+                    my: "center bottom-20",
+                    at: "center top",
+                    using: function (position, feedback) {
+                        $(this).css(position);
+                    }
+                },
+                items: "img, [data-geo], [title]",
+                content: function () {
+                    var element = $(this);
+                    if (element.is("[data-geo]")) {
+                        var text = element.text();
+                        return "<img class='map' alt='" + text +
+                                "' src='http://maps.google.com/maps/api/staticmap?" +
+                                "zoom=11&size=350x350&maptype=terrain&sensor=false&center=" +
+                                text + "'>";
+                    }
+                    if (element.is("[title]")) {
+                        return element.attr("title");
+                    }
+                    if (element.is("img")) {
+                        return element.attr("alt");
+                    }
+                }
+            });
+
+        },
+        oneditsave: function () {}
+    });
+</script>
+
+<script type="text/x-red" data-template-name="tdb query out">
+    <div class="form-row">
+    <label for="node-input-configdiscovery"><i class="icon-tag"></i> PSWoT</label>
+    <input type="text" id="node-input-configdiscovery" placeholder="Name">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="tdb query out">
+    <p>A simple node that converts the message payloads into all lower-case characters</p>
+</script>

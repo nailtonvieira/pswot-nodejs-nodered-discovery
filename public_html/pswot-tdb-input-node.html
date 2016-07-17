@@ -1,0 +1,44 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tdb store in',{
+        category: 'PSWoT',
+        color: '#F5D0A9',
+        defaults: {
+            name: {value:""},
+            location: {value:""},
+            typedevice: {value:""}
+            
+        },
+        inputs:1,
+        outputs:0,
+        icon: "db.png",
+        label: function() {
+            return this.name||"tdb store";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="tdb store in">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+    <label for="node-input-location"><i class="fa fa-anchor"></i> <a target="_blank" href="http://www.geonames.org/maps/google_-12.971_-38.511.html">Location</a></label>
+    <input title="Enter the name of location or the Geonames link." type="text" id="node-input-location" placeholder="Location">
+    </div>
+
+    <div class="form-row">
+    <label for="node-input-typedevice">
+    <i class="fa fa-plug"></i> <span>Device</span></label>
+    <select title="Select the device type that you want to discover." id="node-input-typedevice" style="width:73%">
+    <option value="temperature">Temperature</option>
+    <option value="humidity">Humidity</option>
+    </select>
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="tdb store in">
+    <p>A simple node that converts the message payloads into all lower-case characters</p>
+</script>

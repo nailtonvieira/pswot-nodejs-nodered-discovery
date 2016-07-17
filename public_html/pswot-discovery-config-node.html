@@ -1,0 +1,61 @@
+<!--
+ Copyright 2016 Nailton Andrade.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<!-- CONFIG NODE -->
+<script type="text/x-red" data-template-name="configdiscovery">
+    
+    <div class="form-row">
+    <label for="node-config-input-pswotlocation"><i class="fa fa-cloud"></i> PSWoT</label>
+    <input title="PSWoT Cloud URL." type="text" id="node-config-input-pswotlocation" placeholder="http://localhost:8080/">
+    </div>
+    
+    <div class="form-row">
+    <label for="node-config-input-username"><i class="fa fa-user"></i> User</label>
+    <input type="text" title="PSWoT Cloud user." id="node-config-input-username" placeholder="PSWoT Cloud user">
+    </div>
+    
+    <div class="form-row">
+    <label for="node-config-input-password"><i class="fa fa-key"></i> Password</label>
+    <input type="password" title="PSWoT Cloud password." id="node-config-input-password" placeholder="PSWoT Cloud password">
+    </div>
+    
+    <div class="form-row">
+    <label for="node-config-input-versionapi">
+    <i class="fa fa-github-alt"></i> <span>Version</span></label>
+    <select title="Select the version of PSWoT Service Discovery." id="node-config-input-versionapi" style="width:73%">
+    <option value="v0.1">v0.1</option>
+    <option value="v0.2">v0.2</option>
+    </select>
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('configdiscovery', {
+        category: 'config',
+        defaults: {// AQUI SÃO OS VALORES PADRÕES
+            pswotlocation: {value: "http://localhost:8080", required: true},
+            versionapi: {value: "v0.1", required: true}
+        }, 
+        credentials: {
+            username: {type: "text", required: true},
+            password: {type: "password", required: true}
+        },
+        label: function () {
+            return this.pswotlocation;
+        }
+    });
+</script>
+<!-- END CONFIG NODE -->

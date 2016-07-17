@@ -1,0 +1,121 @@
+<!--
+ Copyright 2016 Nailton Andrade.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<script type="text/javascript">
+    RED.nodes.registerType('discovery', {
+        category: 'PSWoT',
+        color: '#A9D0F5',
+        defaults: {// AQUI SÃO OS VALORES PADRÕES
+            name: {value: ""},
+            location: {value: "", required: true},
+            typedevice: {value: "", required: true},
+            typediscovery: {value: "", required: true},
+            configdiscovery:{value:"", type: "configdiscovery", required:true}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "white-globe.png",
+        label: function () {
+            return this.name || "PWoT Discovery";
+        },
+        // AQUI COMEÇA AS FUNÇÕES, AQUI FAZ TUDO, USANDO O JQUERY, OU SEJA, 
+        // MANIPULANDO JANELAS E ETC
+        oneditprepare: function () {
+            // ESSE CONSOLE APARECE NO NAVEGADOR! PQ É HTML E VAI PARA ELE, JÁ NO JS, 
+            // APARECE NO CONSOLE DO NODE-RED, POR QUE É GERENCIADO PELO NODEJS
+            // oneditprepare can be used to attach any event handlers on the dialog elements.
+            //console.log("PASSEI AQUI NO oneditprepare:");
+            //$("#node-input-typedevice").change(function() {
+            //    console.log("PASSEI AQUI NO change");
+            //    $("#node-input-typediscovery").hide();
+            //    console.log($("#node-input-typedevice option:selected").val());
+            //});
+            $(document).tooltip({
+                position: {
+                    my: "center bottom-20",
+                    at: "center top",
+                    using: function (position, feedback) {
+                        $(this).css(position);
+                    }
+                },
+                items: "img, [data-geo], [title]",
+                content: function () {
+                    var element = $(this);
+                    if (element.is("[data-geo]")) {
+                        var text = element.text();
+                        return "<img class='map' alt='" + text +
+                                "' src='http://maps.google.com/maps/api/staticmap?" +
+                                "zoom=11&size=350x350&maptype=terrain&sensor=false&center=" +
+                                text + "'>";
+                    }
+                    if (element.is("[title]")) {
+                        return element.attr("title");
+                    }
+                    if (element.is("img")) {
+                        return element.attr("alt");
+                    }
+                }
+            });
+
+        },
+        oneditsave: function () { // QUANDO SALVAR CHAMA - 
+            //TUDO AQUI FUNCIONA, É SÓ OLHAR A DOCUMENTAÇÃO
+            //console.log("PASSEI AQUI NO oneditsave:");
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="discovery">
+    <div class="form-row">
+    <label for="node-input-configdiscovery"><i class="icon-tag"></i> PSWoT</label>
+    <input type="text" id="node-input-configdiscovery" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    
+    <div class="form-row">
+    <label for="node-input-location"><i class="fa fa-anchor"></i> <a target="_blank" href="http://www.geonames.org/maps/google_-12.971_-38.511.html">Location</a></label>
+    <input title="Enter the name of location or the Geonames link." type="text" id="node-input-location" placeholder="Location">
+    </div>
+
+    <div class="form-row">
+    <label for="node-input-typedevice">
+    <i class="fa fa-plug"></i> <span>Device</span></label>
+    <select title="Select the device type that you want to discover." id="node-input-typedevice" style="width:73%">
+    <option value="temperature">Temperature</option>
+    <option value="humidity">Humidity</option>
+    </select>
+    </div>
+
+    <div class="form-row">
+    <label for="node-input-typediscovery">
+    <i class="fa fa-search"></i> <span>Discovery</span></label>
+    <select title="Select the discovery parameter." id="node-input-typediscovery" 
+    style="width:73%">
+    <option value="exact">Exact</option>
+    <option value="subsume">Subsume</option>
+    <option value="plugin">Plugin</option>
+    </select>
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="discovery">
+    <p>A simple node that converts the message payloads into all lower-case characters</p>
+</script>

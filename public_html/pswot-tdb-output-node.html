@@ -1,0 +1,91 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tdb simple out', {
+        category: 'PSWoT',
+        color: '#F5D0A9',
+        defaults: {
+            name: {value: ""},
+            configdiscovery: {value: "", type: "configdiscovery", required: true},
+            location: {value: "", required: true},
+            typedevice: {value: "", required: true},
+            datestart: {value: "", required: true},
+            dateend: {value: "", required: true}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "db.png",
+        label: function () {
+            return this.name || "tdb simple";
+        },
+        oneditprepare: function () {
+            $(document).tooltip({
+                position: {
+                    my: "center bottom-20",
+                    at: "center top",
+                    using: function (position, feedback) {
+                        $(this).css(position);
+                    }
+                },
+                items: "img, [data-geo], [title]",
+                content: function () {
+                    var element = $(this);
+                    if (element.is("[data-geo]")) {
+                        var text = element.text();
+                        return "<img class='map' alt='" + text +
+                                "' src='http://maps.google.com/maps/api/staticmap?" +
+                                "zoom=11&size=350x350&maptype=terrain&sensor=false&center=" +
+                                text + "'>";
+                    }
+                    if (element.is("[title]")) {
+                        return element.attr("title");
+                    }
+                    if (element.is("img")) {
+                        return element.attr("alt");
+                    }
+                }
+            });
+
+        },
+        oneditsave: function () {}
+    });
+</script>
+
+<script type="text/x-red" data-template-name="tdb simple out">
+    <div class="form-row">
+    <label for="node-input-configdiscovery"><i class="icon-tag"></i> PSWoT</label>
+    <input type="text" id="node-input-configdiscovery" placeholder="Name">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+    <label for="node-input-location"><i class="fa fa-anchor"></i> <a target="_blank" href="http://www.geonames.org/maps/google_-12.971_-38.511.html">Location</a></label>
+    <input title="Enter the name of location or the Geonames link." type="text" id="node-input-location" placeholder="Location">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-datestart"><i class="fa fa-calendar"></i> Start</label>
+        <input type="date" id="node-input-datestart" placeholder="Name">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-dateend"><i class="fa fa-calendar"></i> End</label>
+        <input type="date" id="node-input-dateend" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+    <label for="node-input-typedevice">
+    <i class="fa fa-plug"></i> <span>Device</span></label>
+    <select title="Select the device type that you want to discover." id="node-input-typedevice" style="width:73%">
+    <option value="temperature">Temperature</option>
+    <option value="humidity">Humidity</option>
+    </select>
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="triplestore out">
+    <p>A simple node that converts the message payloads into all lower-case characters</p>
+</script>
