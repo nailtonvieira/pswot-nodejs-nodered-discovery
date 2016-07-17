@@ -1,1 +1,0 @@
-# pswot-nodered-discovery-node 
